@@ -4,7 +4,7 @@ class Array {
     constructor() {
         this.length = 0;
         this._capacity = 0;
-        this.ptr = memory.allocate(this.length);
+        this.ptr = Memory.allocate(this.length);
     }
 
     push(value) {
@@ -12,18 +12,18 @@ class Array {
             this._resize((this.length + 1) * Array.SIZE_RATIO);
         }
 
-        memory.set(this.ptr + this.length, value);
+        Memory.set(this.ptr + this.length, value);
         this.length++;
     }
 
     _resize(size) {
         const oldPtr = this.ptr;
-        this.ptr = memory.allocate(size);
+        this.ptr = Memory.allocate(size);
         if (this.ptr === null) {
             throw new Error('Out of memory');
         }
-        memory.copy(this.ptr, oldPtr, this.length);
-        memory.free(oldPtr);
+        Memory.copy(this.ptr, oldPtr, this.length);
+        Memory.free(oldPtr);
         this._capacity = size;
     }
 }
@@ -40,3 +40,6 @@ function main(){
 
     console.log(arr);
 }
+
+
+main();
